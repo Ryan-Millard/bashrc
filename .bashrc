@@ -193,7 +193,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # /opt/lamp/lampp
-alias lampp='function _lampp() { sudo /opt/lampp/lampp "$@"; }; _lampp'
+alias xampp='function _lampp() { sudo /opt/lampp/lampp "$@"; }; _lampp'
 export PATH="$HOME/.phpenv/bin:$PATH"
 
 # PHP
@@ -201,5 +201,18 @@ export PATH="$HOME/.phpenv/bin:$PATH"
 eval "$(phpenv init -)"
 
 # Android
-export ANDROID_SDK_ROOT=/android-sdk
-export PATH=$PATH:$ANDROID_SDK_ROOT/cmdline-tools/bin
+export ANDROID_HOME=$HOME/android-sdk
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin:$ANDROID_HOME/platform-tools
+export ANDROID_SDK_ROOT=$ANDROID_HOME # Because sdkmanager prefers it :')
+
+# Markdown to HTML file for viewing
+#	It allows multiple md files to be converted, then opened for viewing in the preferred WSL browser
+alias md='function _md() { for file in "$@"; do pandoc "$file" -o "$file.html" && explorer.exe "$file.html" && rm "$file.html"; done; }; _md'
+
+# Gradle
+export GRADLE_HOME=/opt/gradle/gradle-8.2.1
+export PATH=$PATH:$GRADLE_HOME/bin
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
